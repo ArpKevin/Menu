@@ -1,0 +1,20 @@
+﻿<Window x:Class="Menu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Menu"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Menu>
+            <MenuItem x:Name="MenuItemFile" Header="File">
+                <MenuItem x:Name="MenuItemOpen" Header="Open the source file" Click="MenuItemOpen_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="MenuItemDialog" Header="Dialog Window" Click="MenuItemDialog_Click"/>
+            <MenuItem x:Name="MenuItemNew" Header="New Window" Click="MenuItemNew_Click"/>
+            <MenuItem x:Name="MenuItemExit" Header="Exit" Click="MenuItemExit_Click"/>
+        </Menu>
+        <Button x:Name="Kilepes" Content="Kilépés" Height="32" Width="117" Click="Kilepes_Click" Margin="548,325,135,77"/>
+    </Grid>
+</Window>
