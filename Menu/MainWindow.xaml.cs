@@ -18,12 +18,10 @@ namespace Menu;
 /// </summary>
 public partial class MainWindow : Window
 {
+    public List<Fuggohid> fuggohidak = new List<Fuggohid>();
     public MainWindow()
     {
         InitializeComponent();
-
-        List<Fuggohid> fuggohidak = new List<Fuggohid>();
-
         foreach (var item in File.ReadAllLines(@"..\..\..\src\fuggohidak.csv").Skip(1))
         {
             var x = item.Split("\t");
@@ -36,11 +34,13 @@ public partial class MainWindow : Window
                 int.Parse(x[5])
                 ));
         }
+
+        hidakListbox.ItemsSource = fuggohidak.Select(f => f.HidNev);
     }
 
     private void MenuItemNew_Click(object sender, RoutedEventArgs e)
     {
-        NewWindow newWindow = new();
+        NewWindow newWindow = new(fuggohidak);
         newWindow.Owner = this;
         newWindow.Show();
     }
@@ -52,7 +52,7 @@ public partial class MainWindow : Window
 
     private void MenuItemDialog_Click(object sender, RoutedEventArgs e)
     {
-        NewWindow newWindow = new();
+        NewWindow newWindow = new(fuggohidak);
         newWindow.Owner = this;
         this.Visibility = Visibility.Hidden;
         newWindow.Closed += (s, args) => this.Visibility = Visibility.Visible;
@@ -73,5 +73,29 @@ public partial class MainWindow : Window
             string filePath = openFileDialog.FileName; //ide bekerül a fájl abszolút elérési útja
             //feldolgozzuk a forrásfájlt a szokott módon
         }
+    }
+
+    private void hidakListbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (hidakListbox.SelectedItem != null)
+        {
+            var valasztottHid = fuggohidak.FirstOrDefault(f => hidakListbox.SelectedValue == f.HidNev);
+
+            helyTextbox.Text = valasztottHid.FoldrajziHely;
+            orszagTextbox.Text = valasztottHid.Orszag;
+            hosszTextbox.Text = valasztottHid.HidHossz.ToString();
+            evTextbox.Text = valasztottHid.AtadasEve.ToString();
+        }
+        
+    }
+
+    private void _2000elottRadioButton_Checked(object sender, RoutedEventArgs e)
+    {
+        hidakSzamaTextbox.Text = fuggohidak.Count(f => f.AtadasEve < 2000).ToString();
+    }
+
+    private void _2000benVagyUtanRadioButton_Checked(object sender, RoutedEventArgs e)
+    {
+        hidakSzamaTextbox.Text = fuggohidak.Count(f => f.AtadasEve >= 2000).ToString();
     }
 }

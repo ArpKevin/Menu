@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Menu
 {
-    internal class Fuggohid
+    public class Fuggohid
     {
         public Fuggohid(int helyezes, string hidNev, string foldrajziHely, string orszag, int hidHossz, int atadasEve)
         {
